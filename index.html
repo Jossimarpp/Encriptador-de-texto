@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de Texto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Encriptador de texto</h1>
+
+    <div class="content">
+        <div class="left-column">
+            <textarea id="inputText" placeholder="Ingresa el texto aquí..." oninput="clearOutput()"></textarea>
+            <div class="message">*Solo letras minúsculas y sin acento</div>
+            <div class="button-group">
+                <button onclick="encryptText()">Encriptar</button>
+                <button onclick="decryptText()">Desencriptar</button>
+            </div>
+        </div>
+        <div class="right-column">
+            <div id="outputContainer">
+                <textarea id="outputText" readonly></textarea>
+                <img id="placeholderImage" src="Imagen.png" alt="Imagen de resultado">
+            </div>
+            <div id="copyButtonContainer">
+                <button id="copyButton" onclick="copyText()">Copiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function encryptText() {
+            let text = document.getElementById("inputText").value;
+            let encryptedText = text
+                .replace(/e/g, "enter")
+                .replace(/i/g, "imes")
+                .replace(/a/g, "ai")
+                .replace(/o/g, "ober")
+                .replace(/u/g, "ufat");
+            document.getElementById("outputText").value = encryptedText;
+            toggleOutput(encryptedText);
+        }
+
+        function decryptText() {
+            let text = document.getElementById("inputText").value;
+            let decryptedText = text
+                .replace(/enter/g, "e")
+                .replace(/imes/g, "i")
+                .replace(/ai/g, "a")
+                .replace(/ober/g, "o")
+                .replace(/ufat/g, "u");
+            document.getElementById("outputText").value = decryptedText;
+            toggleOutput(decryptedText);
+        }
+
+        function copyText() {
+            let outputText = document.getElementById("outputText");
+            outputText.select();
+            outputText.setSelectionRange(0, 99999); // Para móviles
+            document.execCommand("copy");
+            alert("Texto copiado al portapapeles");
+        }
+
+        function toggleOutput(text) {
+            const outputText = document.getElementById("outputText");
+            const placeholderImage = document.getElementById("placeholderImage");
+            const copyButtonContainer = document.getElementById("copyButtonContainer");
+
+            if (text) {
+                outputText.style.display = "block";
+                placeholderImage.style.display = "none";
+                copyButtonContainer.style.display = "block";
+            } else {
+                outputText.style.display = "none";
+                placeholderImage.style.display = "block";
+                copyButtonContainer.style.display = "none";
+            }
+        }
+
+        function clearOutput() {
+            let inputText = document.getElementById("inputText").value;
+            if (inputText === "") {
+                document.getElementById("outputText").value = "";
+                toggleOutput("");
+            }
+        }
+    </script>
+
+</body>
+</html>
